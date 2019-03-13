@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.union_pay</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="52"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" string="银联支付" data-string="银联支付" data-key="union_pay"
+                     groups="union_pay.group_union_pay_finance">
+                    <h2>银联API认证信息</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="api_id" placeholder="请输入银联平台用户ID！"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="api_id"/>
+                                <div class="text-muted">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="api_email" placeholder="请输入银联平台用户联系邮箱！"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="api_email"/>
+                                <div class="text-muted">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="api_appid" placeholder="请输入API认证账号(AppId)"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="api_appid"/>
+                                <div class="text-muted">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="api_appsecret" placeholder="API认证密钥(AppSecret)！"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="api_appsecret"/>
+                                <div class="text-muted">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="api_signature" placeholder="用户签名密钥(Signature)！"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="api_signature"/>
+                                <div class="text-muted">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="api_publickey" placeholder="RSA公钥(PublicKey)"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="api_publickey"/>
+                                <div class="text-muted">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="api_testfile1"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="api_testfile1"/>
+                                <div class="text-muted">
+                                    以上设置生效
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="auto_token"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="auto_token"/>
+                                <div class="text-muted">
+                                    自动获取银联Token，间隔为每60分钟
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="union_pay_config_settings_configuration_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'union_pay'}</field>
+    </record>
+
+    <menuitem id="union_pay_config_settings_settings" name="银联基础设置"
+              parent="union_pay.configure_menu"
+              sequence="1"
+              action="union_pay_config_settings_configuration_action"
+              groups="base.group_system"
+    />
+
+
+    <record id="union_pay_system_conf_tree_view" model="ir.ui.view">
+        <field name="name">系统参数列表</field>
+        <field name="model">union.pay.system.conf</field>
+        <field name="arch" type="xml">
+            <tree default_order="id desc" editable="top" create="true">
+                <field name="name"/>
+                <field name="key"/>
+                <field name="value"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="union_pay_system_conf_action">
+        <field name="name">系统参数列表</field>
+        <field name="res_model">union.pay.system.conf</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record model="ir.ui.view" id="union_pay_system_conf_search">
+        <field name="model">union.pay.system.conf</field>
+        <field name="arch" type="xml">
+            <search string="系统参数列表">
+                <field name="name"/>
+                <field name="key"/>
+                <field name="value"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="union_pay_system_conf_menu" name="系统参数列表"
+              parent="union_pay.configure_menu"
+              sequence="2"
+              action="union_pay_system_conf_action"
+              groups="union_pay.group_union_pay_manager"
+    />
+
+</odoo>

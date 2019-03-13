@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem name="银联支付"
+                  id="union_pay.main_menu"
+                  web_icon="union_pay,static/description/icon.png"/>
+
+        <menuitem name="查询" id="union_pay.search_menu"
+                  parent="union_pay.main_menu" sequence="30"
+                  groups="union_pay.group_union_pay_user"
+        />
+
+        <menuitem name="设置" id="union_pay.configure_menu"
+                  parent="union_pay.main_menu" sequence="100"
+        />
+
+    </data>
+</odoo>
