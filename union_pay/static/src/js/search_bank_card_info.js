@@ -4,7 +4,10 @@ odoo.define('union_pay_search_bank_card_info', function (require) {
     let AbstractAction = require('web.AbstractAction');
     let core = require('web.core');
     let QWeb = core.qweb;
-    var rpc = require('web.rpc');
+    let rpc = require('web.rpc');
+    let _t = core._t;
+
+
 
     let CustomPageDemo = AbstractAction.extend({
         template: 'UnionPaySearchBankCardInfo',
@@ -17,6 +20,7 @@ odoo.define('union_pay_search_bank_card_info', function (require) {
                 self.do_warn('警告', '银行卡号不能为空!');
                 return false;
             }
+            this.do_notify("正在查询...", "正在查询...");
             this.searchBankCardInfo(cardNo);
         },
         searchBankCardInfo: function (cardNo) {
@@ -27,7 +31,8 @@ odoo.define('union_pay_search_bank_card_info', function (require) {
                 args: [cardNo],
             }).then(function (data) {
                 // Result
-                console.log(data)
+                console.log(data);
+                self.do_notify(_t("查询成功.")), _t("查询成功...");
                 self.setSearchResult(data)
             });
         },
@@ -46,10 +51,21 @@ odoo.define('union_pay_search_bank_card_info', function (require) {
             self.$el.find('#cardAttr').html(result_data.cardAttr);
             self.$el.find('#hdqrsInsCnAbbr').html(result_data.hdqrsInsCnAbbr);
             self.$el.find('#cardBrand').html(result_data.cardBrand);
+            // var search_result = new Vue({
+            //     el: '#search_result',
+            //     data: {
+            //         seen: true,
+            //         issNm: result_data.issNm,
+            //         hdqrsInsCnNm: result_data.hdqrsInsCnNm,
+            //         hdqrsInsCnAbbr: result_data.hdqrsInsCnAbbr,
+            //     }
+            // })
         }
     });
 
 
     core.action_registry.add('union_pay_search_bank_card_info', CustomPageDemo);
     return CustomPageDemo;
+
+
 });

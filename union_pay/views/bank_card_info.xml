@@ -9,6 +9,7 @@
         <template id="union_pay.search_bank_card_info_template" name="UnionPay Search BankCard Info" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <script type="text/javascript" src="/union_pay/static/src/js/search_bank_card_info.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/vue"></script>
             </xpath>
         </template>
 
