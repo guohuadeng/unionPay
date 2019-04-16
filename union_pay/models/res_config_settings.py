@@ -32,6 +32,7 @@ class ResConfigSettings(models.TransientModel):
         return res
 
     def set_values(self):
+        super(ResConfigSettings, self).set_values()
         self.env['ir.config_parameter'].sudo().set_param('union_pay.api_id', self.api_id)
         self.env['ir.config_parameter'].sudo().set_param('union_pay.api_email', self.api_email)
         self.env['ir.config_parameter'].sudo().set_param('union_pay.api_appid', self.api_appid)
@@ -40,7 +41,6 @@ class ResConfigSettings(models.TransientModel):
         self.env['ir.config_parameter'].sudo().set_param('union_pay.api_signature', self.api_signature)
         self.env['ir.config_parameter'].sudo().set_param('union_pay.api_testfile1', self.api_testfile1)
         self.env['ir.config_parameter'].sudo().set_param('union_pay.auto_token', self.auto_token)
-        super(ResConfigSettings, self).set_values()
         data = {
             'name': '银联-定时更新token值',
             'active': True,
@@ -53,7 +53,7 @@ class ResConfigSettings(models.TransientModel):
             'code': "env['union.pay.get.token'].get_union_pay_token()",
         }
         if self.auto_token:
-            cron = self.env['ir.cron'].sudo().search([('code', '=', "env['union.pay.get.token'].get_union_pay_token()")])
+            cron = self.env['ir.cron'].sudo().search([('name', '=', "银联-定时更新token值")])
             if len(cron) >= 1:
                 cron.sudo().write(data)
             else:
